@@ -63,6 +63,7 @@ export default function App() {
   const add = (text) => {
     // is text empty?
     if(text === null || text === "") {
+      console.error('Error!!!! Imput a task');
       return false;
     }
 
