@@ -24,6 +24,7 @@ const heading = doneHeading ? "Completed" : "To Do";
 
 if(items === null || items.length === 0) {
   return null;
+  console.log("Error!!! Insert a task");
 }
 
 return(
