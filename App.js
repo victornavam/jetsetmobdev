@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Constants from 'expo-constants';
-import * as SQLite from 'expo-sqlite';
+import * as SQLite from 'expo-sqlite'; //Import SQLite
 
-const db = SQLite.openDatabase("db.db");
+const db = SQLite.openDatabase("db.db"); //Create DB
 
 function Items({ done: doneHeading, onPressItem}) {
-  const [items, setItems] = React.useState([]);
+  const [items, setItems] = React.useState([]); //we use items to store information
 
 
 React.useEffect(() => {
-  db.transaction(tx => {
+  db.transaction(tx => { //a transaction object is past to call back function as parameterto execute the sql statement
     tx.executeSql(
       `SELECT * FROM items where done = ?;`,
       [doneHeading ? 1:0],
-      (_, { rows: { _array } }) => setItems(_array)
+      (_, { rows: { _array } }) => setItems(_array) //this is a ResultSet object, ans _array value is what we need since return item
     );
-    console.log(items);
+    console.log(items); // shows on console the db
   });
 }, []);
 
@@ -26,7 +26,7 @@ if(items === null || items.length === 0) {
   return null;
   console.log("Error!!! Insert a task");
 }
-
+//---------------store date provided---------------
 return(
   <View style = {styles.sectionContainer}>
     <Text style = {styles.sectionHeading}> {heading} </Text>
@@ -51,7 +51,7 @@ return(
 export default function App() {
   const [text, setText] = React.useState(null)
   const [forceUpdate, forceUpdateId] = useForceUpdate()
-
+//-------------------create a table-----------------
   React.useEffect(() => {
     db.transaction(tx => {
       tx.executeSql(
@@ -63,10 +63,10 @@ export default function App() {
   const add = (text) => {
     // is text empty?
     if(text === null || text === "") {
-      console.error('Error!!!! Imput a task');
+      console.error('Error!!!! Imput a task'); //show an error when textimput is empty
       return false;
     }
-
+//----------Insert data to the db---------------------
     db.transaction(
       tx => {
         tx.executeSql("INSERT into items (done, value) values (0, ?)", [text]);
@@ -78,7 +78,7 @@ export default function App() {
       forceUpdate
     );
   }
-
+//-------------------convert form To Do to Completed------------------
   return(
     <View style = {styles.container}>
       <Text style = {styles.heading}> React_SQLite App </Text>
@@ -133,7 +133,7 @@ function useForceUpdate() {
   return [() => setValue(value + 1), value];
 }
 
-
+//-----------styles----------------------------
 
 const styles = StyleSheet.create({
   container: {
