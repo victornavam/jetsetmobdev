@@ -10,7 +10,7 @@ function Items({ done: doneHeading, onPressItem}) {
 
 
 React.useEffect(() => {
-  db.transaction(tx => { //a transaction object is past to call back function as parameterto execute the sql statement
+  db.transaction(tx => { //a transaction object is past to call back function as parameter to execute the sql statement
     tx.executeSql(
       `SELECT * FROM items where done = ?;`,
       [doneHeading ? 1:0],
@@ -24,9 +24,9 @@ const heading = doneHeading ? "Completed" : "To Do";
 
 if(items === null || items.length === 0) {
   return null;
-  console.log("Error!!! Insert a task");
+  
 }
-//---------------store date provided---------------
+//---------------store data provided---------------
 return(
   <View style = {styles.sectionContainer}>
     <Text style = {styles.sectionHeading}> {heading} </Text>
